@@ -52,31 +52,39 @@ exports.deleteMovie = asyncErrorHandler(async (req, res) => {
   });
 });
 
-//this function is responsible for getting movies by genre then writing the result to a file and sending the result to the client
-//can you manipulate aggregation to get the count of movies in each genre (there are formated example in result.txt in the log folder)
+// this function is responsible for getting movies by genre then writing the result to a file and sending the result to the client
+// can you manipulate aggregation to get the count of movies in each genre (there are formated example in result.txt in the log folder)
 // bouns: is there a better way to optimize performance 
 
+
 exports.getMoviesByGenre = asyncErrorHandler(async (req, res, next) => {
-  const movies = await Movie.aggregate([
-    { $unwind: "$genre" },
-    {
-      $group: {
-        _id: "$genre",
-        movies: { $push: "$name" },
+  try {
+    const movies = await Movie.aggregate([
+      { $unwind: "$genre" },
+      {
+        $group: {
+          _id: "$genre",
+          movies: { $push: "$name" },
+          movieCount: { $sum: 1 },    // counting the number of movies in each genre 
+        },
       },
-    },  
-    { $addFields: { genre: "$_id" } },
-    { $project: { _id: 0 } },
-    { $sort: { movieCount: -1 } },
-  ]);
+      { $addFields: { genre: "$_id" } },
+      { $project: { _id: 0, genre: 1, movies: 1, movieCount: 1 } },
+      { $sort: { movieCount: -1 } },  
+    ]);
 
-  fs.writeFileSync("./log/result.txt", JSON.stringify(movies), { flag: "a" });
+    await fs.promises.writeFile("./log/result.txt", JSON.stringify(movies), { flag: "a" });
+    // using promises to write to file asynchronously to avoid blocking the server and improve performance
 
-  res.status(200).json({
-    status: "success",
-    count: movies.length,
-    data: {
-      movies,
-    },
-  });
+    res.status(200).json({
+      status: "success",
+      count: movies.length,
+      data: {
+        movies,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+  
 });

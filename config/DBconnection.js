@@ -26,6 +26,6 @@ async function addMovies() {
 }
 
 // Call the function to add movies
-//addMovies();
+// addMovies();
 
 module.exports = mongoose;
