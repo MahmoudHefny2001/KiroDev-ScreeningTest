@@ -96,32 +96,21 @@ router.post('/login', async (request, response) => {
 
 
 // LOGOUT
-router.post('/logout', async (request, response) => {
-    try {
-        const { refreshToken } = request.body;
-        if (!refreshToken) {
-            return response.status(401).json('User not logged in');
-        }
-
-        const user = await User.findOne({ refreshToken });
-        if (!user) {
-            return response.status(403).json('Invalid token');
-        }
-
-        // block the access, and refresh token
-        
-        user.refreshToken = '';
-        user.accessToken = '';
-        await user.save();
-
-        response.status(200).json('User logged out');
 
 
-    } catch (error) {
-        response.status(400).json(error);
+// In-memory store for invalidated tokens
+const blacklistedTokens = new Set();
+
+// Logout route to invalidate the token
+router.post('/logout', (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (token) {
+        blacklistedTokens.add(token);
+        return res.send('Logged out successfully');
     }
-})
-
+    res.status(400).send('No token provided');
+    
+});
 
 
 module.exports = router;
