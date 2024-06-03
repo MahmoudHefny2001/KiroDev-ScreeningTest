@@ -6,6 +6,12 @@ const User = require('../models/Users');
 
 const jwt = require('jsonwebtoken');
 
+// const verifyToken = require('./middlewares/verifyToken');
+
+// route.get('/check-authentication', verifyToken, (req, res) => {
+    // res.sendStatus(200);
+// });
+
 
 // REGISTRATION
 router.post('/signup', async (request, response) => {
@@ -96,7 +102,6 @@ router.post('/login', async (request, response) => {
 
 
 // LOGOUT
-
 
 // In-memory store for invalidated tokens
 const blacklistedTokens = new Set();

@@ -26,4 +26,4 @@
     ,"movies":["Inglourious Basterds"],
     "genre":"War"
 }]
-[][]
+[][][][][][{"movies":["Inception","Inception","The Dark Knight","The Dark Knight","The Dark Knight","The Matrix","The Matrix","Gladiator","Gladiator","Gladiator","Inglourious Basterds","Inglourious Basterds","Inglourious Basterds","The Shawshank Redemption","The Godfather","The Godfather","Pulp Fiction","Pulp Fiction","Fight Club"],"movieCount":19,"genre":null}][{"movies":["The Dark Knight","Gladiator","Inglourious Basterds","The Shawshank Redemption","The Godfather","Pulp Fiction","Fight Club"],"movieCount":7},{"movies":["Inception","The Dark Knight","The Matrix","Gladiator"],"movieCount":4},{"movies":["The Dark Knight","The Godfather","Pulp Fiction"],"movieCount":3},{"movies":["Gladiator","Inglourious Basterds"],"movieCount":2},{"movies":["Inception","The Matrix"],"movieCount":2},{"movies":["Inglourious Basterds"],"movieCount":1}]

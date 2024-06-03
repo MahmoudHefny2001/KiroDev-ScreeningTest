@@ -60,16 +60,16 @@ exports.deleteMovie = asyncErrorHandler(async (req, res) => {
 exports.getMoviesByGenre = asyncErrorHandler(async (req, res, next) => {
   try {
     const movies = await Movie.aggregate([
-      { $unwind: "$genre" },
+      { $unwind: "$genres" },
       {
         $group: {
-          _id: "$genre",
+          _id: "$genres",
           movies: { $push: "$name" },
           movieCount: { $sum: 1 },    // counting the number of movies in each genre 
         },
       },
       { $addFields: { genre: "$_id" } },
-      { $project: { _id: 0, genre: 1, movies: 1, movieCount: 1 } },
+      { $project: { _id: 0, genres: 1, movies: 1, movieCount: 1 } },
       { $sort: { movieCount: -1 } },  
     ]);
 
