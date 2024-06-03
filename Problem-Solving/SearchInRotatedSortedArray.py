@@ -53,3 +53,13 @@ def search(nums, target):
     return -1
 
     # Time complexity: O(log n)
+
+
+# Example usage:
+nums1 = [4, 5, 6, 7, 0, 1, 2]
+target1 = 0
+print("Example 1 output:", search(nums1, target1))
+
+nums2 = [5, 6, 7, 0, 1, 2, 4]
+target2 = 3
+print("Example 2 output:", search(nums2, target2))
